@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class GeneratorActivity extends AppCompatActivity {
 
     private Button mGeneratorButton;
@@ -101,14 +103,14 @@ public class GeneratorActivity extends AppCompatActivity {
         String generation;
         String question = passField.getText().toString();
         question = changeLettersToNumbers(question);
+        question = randomizeCase(question);
 
-
-
+        generation = question;
 
         return generation;
     }
 
-    public String changeLettersToNumbers(String field)
+    public static String changeLettersToNumbers(String field)
     {
         field.replaceAll("(?i)a", "4")
                 .replaceAll("(?i)e", "3")
@@ -116,5 +118,18 @@ public class GeneratorActivity extends AppCompatActivity {
                 .replaceAll("(?i)o", "0");
 
         return field;
+    }
+
+    public static String randomizeCase(String str) {
+
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(str.length());
+
+        for (char c : str.toCharArray())
+            sb.append(rnd.nextBoolean()
+                    ? Character.toLowerCase(c)
+                    : Character.toUpperCase(c));
+
+        return sb.toString();
     }
 }

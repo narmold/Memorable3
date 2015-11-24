@@ -116,11 +116,9 @@ public class GeneratorActivity extends AppCompatActivity {
         field = field.replace('e','3');
         field = field.replace('i','1');
         field = field.replace('o','0');
-
-//        field.replaceAll("(?i)a", "4")
-//                .replaceAll("(?i)e", "3")
-//                .replaceAll("(?i)i", "1")
-//                .replaceAll("(?i)o", "0");
+        field = field.replace('b','8');
+        field = field.replace('g','9');
+        field = field.replace('s','5');
 
         return field;
     }

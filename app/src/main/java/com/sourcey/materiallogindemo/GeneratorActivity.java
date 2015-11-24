@@ -112,10 +112,15 @@ public class GeneratorActivity extends AppCompatActivity {
 
     public static String changeLettersToNumbers(String field)
     {
-        field.replaceAll("(?i)a", "4")
-                .replaceAll("(?i)e", "3")
-                .replaceAll("(?i)i", "1")
-                .replaceAll("(?i)o", "0");
+        field = field.replace('a','4');
+        field = field.replace('e','3');
+        field = field.replace('i','1');
+        field = field.replace('o','0');
+
+//        field.replaceAll("(?i)a", "4")
+//                .replaceAll("(?i)e", "3")
+//                .replaceAll("(?i)i", "1")
+//                .replaceAll("(?i)o", "0");
 
         return field;
     }

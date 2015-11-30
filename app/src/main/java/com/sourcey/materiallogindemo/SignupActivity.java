@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +20,7 @@ import butterknife.InjectView;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+    DatabaseHelper dh;
 
     @InjectView(R.id.input_name) EditText _nameText;
     @InjectView(R.id.input_email) EditText _emailText;
@@ -31,6 +33,8 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
+
+        dh = new DatabaseHelper(getApplicationContext());
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +115,11 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        if(!dh.usernameTaken(_emailText.getText().toString())){
+            dh.insertAccount(_emailText.getText().toString(), _passwordText.getText().toString());
+        }
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("Preferences",0);
+        pref.edit().putString("account_name", _emailText.getText().toString()).apply();
         finish();
     }
 

@@ -43,6 +43,11 @@
             android:label="Home"
             android:theme="@style/AppTheme.Dark" >
         </activity>
+        <activity
+            android:name=".NewEntry"
+            android:label="New Entry"
+            android:theme="@style/AppTheme.Dark" >
+        </activity>
     </application>
 
 </manifest>

@@ -28,7 +28,8 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".GeneratorActivity"
-            android:label="@string/title_activity_generator" >
+            android:label="@string/title_activity_generator"
+            android:theme="@style/AppTheme.Dark" >
         </activity>
         <activity
             android:name=".PasswordBankActivity"

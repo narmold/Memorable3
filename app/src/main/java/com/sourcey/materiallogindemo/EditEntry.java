@@ -34,9 +34,9 @@ public class EditEntry extends AppCompatActivity implements View.OnClickListener
         password = (EditText) findViewById(R.id.text_password);
 
         Bundle b = this.getIntent().getExtras();
-        website.setText(b.get("website").toString());
-        username.setText(b.get("username").toString());
-        password.setText(b.get("password").toString());
+        website.setText(b.getString("website", ""));
+        username.setText(b.getString("username", ""));
+        password.setText(b.getString("password", ""));
 
         account_name = getApplicationContext().getSharedPreferences("Preferences", 0).getString("account_name", "Broken");
 
@@ -62,7 +62,6 @@ public class EditEntry extends AppCompatActivity implements View.OnClickListener
 
                     Intent i = new Intent();
                     i.putExtra("password", filledPass);
-                    //finish the actiivty and return the chosen latitude and longitude
                     setResult(RESULT_OK, i);
                     finish();
                 }else{

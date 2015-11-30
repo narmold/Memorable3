@@ -43,14 +43,15 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
     private static Pattern numberCharPattern;
     private static Pattern specialCharPattern;
     private static Pattern fullWordPattern;
+    private static final String SPLIT_SEGMENT_REGEX = "[0-9" + Pattern.quote("@#$%&*+-_(),':;?.![]") + "\\s\\/]+";
 
     static
     {
         lowercaseCharPattern = Pattern.compile("(.*)[a-z](.*)");
         uppercaseCharPattern = Pattern.compile("(.*)[A-Z](.*)");
         numberCharPattern = Pattern.compile("(.*)[0-9](.*)");
-        specialCharPattern = Pattern.compile("(.*)[@#$%&*+\\-_(),':;?.!\\[\\]\\s\\/](.*)");
-        fullWordPattern = Pattern.compile("[A-Za-z]+");
+        specialCharPattern = Pattern.compile("(.*)[" + Pattern.quote("@#$%&*+-_(),':;?.![]") + "\\s\\/](.*)");
+        fullWordPattern = Pattern.compile("[A-Za-z][a-z]+");
     }
 
     String[] menu;
@@ -61,17 +62,103 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
     TextView titleView;
     EditText passwordView;
     Map<Integer, CheckedTextView> requirementViewMap = new HashMap<>();
-    Map<Integer, Predicate<String>> requirementsMap = new HashMap<>();
     ProgressBar passwordStrengthView;
     Button saveButtonView;
+
+    String account;
+    String site;
+    String user;
+
+
+    Map<Integer, Predicate<String>> requirementsMap = new HashMap<>();
     SpellCheckerSession spellCheckerSession;
     double spelledCorrectlyPercentage;
-    Semaphore spellCheckLock = new Semaphore(1);
+    DatabaseHelper database;
+    Pattern passwordPattern;
+    Pattern infoPattern;
+
+
+    /**
+     * Generates a matching pattern for past and current passwords.
+     *
+     * @param database the database to use.
+     * @param account the username currently logged in.
+     * @return the compiled regular expression pattern to match passwords.
+     */
+    private static Pattern generatePasswordPattern(DatabaseHelper database, String account)
+    {
+        StringBuilder passwordRegex = new StringBuilder("(.*)(");
+        for(PasswordInfo password : database.selectPasswords(account))
+        {
+            passwordRegex.append(Pattern.quote(password.getPassword()));
+            passwordRegex.append("|");
+            for(String passwordSegment : password.getPassword().split(SPLIT_SEGMENT_REGEX))
+            {
+                if(passwordSegment.length() > 5 && !passwordSegment.equals(password.getPassword())) {
+                    passwordRegex.append(Pattern.quote(passwordSegment));
+                    passwordRegex.append("|");
+                }
+            }
+        }
+        passwordRegex.deleteCharAt(passwordRegex.length() - 1); //Delete extra '|'
+        passwordRegex.append(")(.*)");
+
+        return Pattern.compile(passwordRegex.toString());
+    }
+
+    /**
+     * Generates a matching pattern for past and current passwords.
+     *
+     * @param database the database to use.
+     * @param account the username currently logged in.
+     * @return the compiled regular expression pattern to match passwords.
+     */
+    private static Pattern generateInfoPattern(DatabaseHelper database, String account)
+    {
+        StringBuilder infoRegex = new StringBuilder("(.*)(");
+        infoRegex.append(Pattern.quote(account));
+        infoRegex.append("|");
+        for(PasswordInfo password : database.selectPasswords(account))
+        {
+            for(String usernameSegment : account.split(SPLIT_SEGMENT_REGEX))
+            {
+                if(usernameSegment.length() > 5) {
+                    infoRegex.append(Pattern.quote(usernameSegment));
+                    infoRegex.append("|");
+                }
+            }
+
+            for(String websiteSegment : password.getWebsite().split(SPLIT_SEGMENT_REGEX))
+            {
+                if(websiteSegment.length() > 5) {
+                    infoRegex.append(Pattern.quote(websiteSegment));
+                    infoRegex.append("|");
+                }
+            }
+
+            for(String passwordSegment : password.getUsername().split(SPLIT_SEGMENT_REGEX))
+            {
+                if(passwordSegment.length() > 5) {
+                    infoRegex.append(Pattern.quote(passwordSegment));
+                    infoRegex.append("|");
+                }
+            }
+        }
+        infoRegex.deleteCharAt(infoRegex.length() - 1); //Delete extra '|'
+        infoRegex.append(")(.*)");
+
+        return Pattern.compile(infoRegex.toString());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checker);
+
+        account = getApplicationContext().getSharedPreferences("Preferences", 0).getString("account_name", "Broken");
+        database = new DatabaseHelper(getApplicationContext());
+        passwordPattern = generatePasswordPattern(database, account);
+        infoPattern = generateInfoPattern(database, account);
 
         titleView = (TextView) findViewById(R.id.titleText);
         passwordView = (EditText) findViewById(R.id.passwordInputField);
@@ -83,6 +170,8 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
             Bundle data = intent.getExtras();
             if (data != null) {
                 passwordView.setText(data.getString("password", ""));
+                site = data.getString("website", null);
+                user = data.getString("username", null);
             }
         }
 
@@ -143,7 +232,6 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
                     if(matches.size() > 0) {
                         TextInfo[] array = new TextInfo[matches.size()];
                         spellCheckerSession.getSentenceSuggestions(matches.toArray(array), 1);
-                        spellCheckLock.acquireUninterruptibly();
                     }
                 }
 
@@ -153,13 +241,13 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
         requirementsMap.put(R.id.infoRequirementText, new Predicate<String>() {
             @Override
             public boolean apply(String s) {
-                return true;
+                return !infoPattern.matcher(s).matches();
             }
         });
         requirementsMap.put(R.id.similarityRequirementText, new Predicate<String>() {
             @Override
             public boolean apply(String s) {
-                return true;
+                return !passwordPattern.matcher(s).matches();
             }
         });
 
@@ -227,7 +315,24 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.savePasswordButton:
 
+                    if(!requirementsMap.get(R.id.lengthRequirementText).apply(passwordView.getText().toString()))
+                    {
+                        passwordView.setError("The password must be between 8 and 64 characters in length.");
+                    }
+                    else if(site != null && user != null) {
+                        database.modifySitePassword(account, site, user, passwordView.getText().toString());
+                        Intent i = new Intent();
+                        i.putExtra("password", passwordView.getText());
+                        //finish the activity and return the edit password screen
+                        setResult(RESULT_OK, i);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, NewEntry.class);
+                        intent.putExtra("password", passwordView.getText().toString());
+                        startActivity(intent);
+                    }
                 break;
+
         }
     }
 
@@ -253,6 +358,6 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         spelledCorrectlyPercentage = 1.0 - ((double)totalMisspelled / (double)totalWords);
-        spellCheckLock.release();
+        requirementViewMap.get(R.id.uniqueRequirementText).setChecked(spelledCorrectlyPercentage <= 0.25);
     }
 }

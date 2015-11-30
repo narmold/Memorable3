@@ -1,5 +1,7 @@
 package com.sourcey.materiallogindemo;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -35,12 +37,20 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
     String account_name;
     PasswordBankActivity reference;
     Integer EDIT_RESULT = 0;
+    ClipboardManager clipboard;
 
+
+    private  void copyToClipboard(String username, String passwordText)
+    {
+        clipboard.setPrimaryClip(ClipData.newPlainText(username, passwordText));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_bank);
+
+        clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         dbHelp = new DatabaseHelper(getApplicationContext());
         account_name = getApplicationContext().getSharedPreferences("Preferences", 0).getString("account_name", "Broken");
         passwordInfoList = new ArrayList<>();
@@ -92,6 +102,8 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
                             startActivityForResult(intent, EDIT_RESULT);
                         } else if (options[item].equals("Check Password")) {
                             Bundle b = new Bundle();
+                            b.putString("website", passwordInfoList.get(position).getWebsite());
+                            b.putString("username", passwordInfoList.get(position).getUsername());
                             b.putString("password", passwordInfoList.get(position).getPassword());
                             Intent intent = new Intent(reference, CheckerActivity.class);
                             intent.putExtras(b);
@@ -120,7 +132,9 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
                 String newPassword = data.getStringExtra("password");
                 Toast.makeText(PasswordBankActivity.this, "Password updated", Toast.LENGTH_SHORT).show();
             } else if (requestCode == 2) {
+                String newPassword = data.getStringExtra("password");
 
+                Toast.makeText(PasswordBankActivity.this, "Password updated", Toast.LENGTH_SHORT).show();
             }
         }
     }

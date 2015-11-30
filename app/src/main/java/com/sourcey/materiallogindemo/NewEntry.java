@@ -32,6 +32,16 @@ public class NewEntry extends AppCompatActivity implements View.OnClickListener{
 
         account_name = getApplicationContext().getSharedPreferences("Preferences", 0).getString("account_name", "Broken");
 
+        Intent intent = getIntent();
+        if(intent != null) {
+            Bundle b = intent.getExtras();
+            if(b != null) {
+                website.setText(b.getString("website", ""));
+                username.setText(b.getString("username", ""));
+                password.setText(b.getString("password", ""));
+            }
+        }
+
         Button btnSave = (Button) findViewById(R.id.button_save_password);
         btnSave.setOnClickListener(this);
 

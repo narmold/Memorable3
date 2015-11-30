@@ -43,7 +43,7 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.password_bank);
         dbHelp = new DatabaseHelper(getApplicationContext());
         account_name = getApplicationContext().getSharedPreferences("Preferences", 0).getString("account_name", "Broken");
-        passwordInfoList = new ArrayList<PasswordInfo>();
+        passwordInfoList = new ArrayList<>();
         infoListView = (ListView) findViewById(R.id.passwordInfoList);
 
         reference = this;
@@ -91,7 +91,11 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
                             intent.putExtras(b);
                             startActivityForResult(intent, EDIT_RESULT);
                         } else if (options[item].equals("Check Password")) {
-
+                            Bundle b = new Bundle();
+                            b.putString("password", passwordInfoList.get(position).getPassword());
+                            Intent intent = new Intent(reference, CheckerActivity.class);
+                            intent.putExtras(b);
+                            startActivityForResult(intent, 2);
                         } else if (options[item].equals("Delete Entry")) {
                             dbHelp.removePassword(account_name, passwordInfoList.get(position).getWebsite(), passwordInfoList.get(position).getUsername());
                             Toast.makeText(getApplicationContext(), "Password Deleted", Toast.LENGTH_SHORT).show();

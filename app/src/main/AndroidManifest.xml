@@ -36,6 +36,7 @@
         </activity>
         <activity
             android:name=".CheckerActivity"
+            android:theme="@style/AppTheme.Dark"
             android:label="Checker" >
         </activity>
         <activity

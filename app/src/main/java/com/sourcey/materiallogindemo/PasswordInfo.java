@@ -13,12 +13,14 @@ public class PasswordInfo {
     private String username;
     private String password;
     private Date lastUpdate;
+    private DateHelper expirationDate;
     Calendar CurrentDateTime = Calendar.getInstance();
 
-    public PasswordInfo(String website, String username, String password){
+    public PasswordInfo(String website, String username, String password, DateHelper date){
         this.website =website;
         this.username = username;
         this.password = password;
+        this.expirationDate = date;
         this.lastUpdate = CurrentDateTime.getTime();
     }
 
@@ -34,9 +36,7 @@ public class PasswordInfo {
         return this.password;
     }
 
-    public String getLastUpdate(){
-        return ((Integer)this.lastUpdate.getMonth()).toString() + "/" +((Integer)this.lastUpdate.getDate()).toString();
-    }
+    public DateHelper getExpiration(){return this.expirationDate;}
 
 
 }

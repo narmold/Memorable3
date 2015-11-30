@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by mmiguel12345 on 11/29/15.
- */
+
 public class ListAdapter extends ArrayAdapter {
     //contains the context being used and a list of row items
     private final Context context;
@@ -46,7 +45,14 @@ public class ListAdapter extends ArrayAdapter {
         username.setText(PasswordInfoArrayList.get(position).getUsername());
         website.setText(PasswordInfoArrayList.get(position).getWebsite());
         password.setText(PasswordInfoArrayList.get(position).getPassword());
-        expiration.setText(PasswordInfoArrayList.get(position).getLastUpdate());
+
+        DateHelper expires = PasswordInfoArrayList.get(position).getExpiration();
+        boolean expired = expires.isLaterThan(DateHelper.getCurrentDate());
+        if(expired){
+            expiration.setTextColor(Color.RED);
+        }
+        String expStr = PasswordInfoArrayList.get(position).getExpiration().toString();
+        expiration.setText(expStr);
 
         return rowView;
     }

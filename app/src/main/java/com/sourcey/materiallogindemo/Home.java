@@ -23,7 +23,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         Button btnBank = (Button) findViewById(R.id.bank_button);
         btnBank.setOnClickListener(this);
 
-
     }
 
 

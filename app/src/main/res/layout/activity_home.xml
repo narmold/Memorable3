@@ -2,6 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:weightSum="1">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.35"/>
+
+    <ImageView android:src="@drawable/logo"
+               android:layout_width="wrap_content"
+               android:layout_height="72dp"
+               android:layout_marginBottom="24dp"
+               android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Generator"
+        android:id="@+id/generator_button"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Checker"
+        android:id="@+id/checker_button"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Bank"
+        android:id="@+id/bank_button"
+        android:layout_gravity="center"/>
 </LinearLayout>

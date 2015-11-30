@@ -108,6 +108,7 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
+
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
@@ -115,7 +116,6 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Email is already in use", Toast.LENGTH_LONG).show();
-
         _signupButton.setEnabled(true);
     }
 

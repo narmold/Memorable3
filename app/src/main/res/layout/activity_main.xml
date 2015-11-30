@@ -7,7 +7,44 @@
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:weightSum="1">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.33"/>
+
+            <ImageView android:src="@drawable/logo"
+                       android:layout_width="wrap_content"
+                       android:layout_height="72dp"
+                       android:layout_marginBottom="24dp"
+                       android:layout_gravity="center_horizontal"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Log Out"
+                android:id="@+id/logout_button"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Return"
+                android:id="@+id/return_button"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
     <ListView android:id="@+id/left_drawer"
               android:layout_width="240dp"

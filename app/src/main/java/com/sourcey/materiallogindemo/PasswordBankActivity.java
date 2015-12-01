@@ -132,8 +132,7 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
                 String newPassword = data.getStringExtra("password");
                 Toast.makeText(PasswordBankActivity.this, "Password updated", Toast.LENGTH_SHORT).show();
             } else if (requestCode == 2) {
-                String newPassword = data.getStringExtra("password");
-
+                String newPassword = data.getExtras().getString("password");
                 Toast.makeText(PasswordBankActivity.this, "Password updated", Toast.LENGTH_SHORT).show();
             }
         }

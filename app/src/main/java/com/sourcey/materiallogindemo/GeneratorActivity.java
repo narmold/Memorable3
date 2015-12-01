@@ -33,8 +33,6 @@ public class GeneratorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generator);
 
-
-
         //Set generated pass to default
         mGenerateTextView = (TextView) findViewById(R.id.generate_text);
         mGenerateTextView.setText(generation);

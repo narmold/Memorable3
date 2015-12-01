@@ -54,6 +54,10 @@ public class GeneratorActivity extends AppCompatActivity {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 int question = mQuestionBank[mCurrentIndex].getTextResId();
                 mQuestionTextView.setText(question);
+
+                EditText questionField = (EditText) findViewById(R.id.question_field);
+                questionField.setText("");
+
             }
         });
 

@@ -11,7 +11,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A class which assists all activities in retrieving and submitting SQL queries to the database
@@ -22,12 +24,15 @@ public class DatabaseHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String ACCOUNT_TABLE = "Accounts";
     private static final String PASSWORD_TABLE = "Passwords";
+    private static final String LOCATION_TABLE = "Locations";
     private Context context;
     private SQLiteDatabase db;
     private SQLiteStatement currentStmt;
     private static final String NEW_USER_QUERY = "insert into " + ACCOUNT_TABLE + "(account_name, password) values (?, ?)";
     private static final String NEW_PASSWORD_QUERY = "insert into " + PASSWORD_TABLE + "(account_name, website, username, password, date) " +
             "values (?, ?, ?, ?, ?)";
+    private static final String NEW_LOCATION_QUERY  = "insert into " + LOCATION_TABLE + "(account_name, latitude, longitude) " +
+            "values (?, ?, ?)";
 
     //Creates a new database helper
     public DatabaseHelper(Context context) {
@@ -45,7 +50,6 @@ public class DatabaseHelper {
         return this.currentStmt.executeInsert();
     }
 
-    //inserts a new geocache into the database
     public long insertSitePassword(String account_name, String website, String username, String password, String date) {
         this.currentStmt = this.db.compileStatement(NEW_PASSWORD_QUERY);
         this.currentStmt.bindString(1, account_name);
@@ -56,12 +60,28 @@ public class DatabaseHelper {
         return this.currentStmt.executeInsert();
     }
 
+    public long insertLocation(String account_name, Double latitude, Double longitude) {
+        this.currentStmt = this.db.compileStatement(NEW_LOCATION_QUERY);
+        this.currentStmt.bindString(1, account_name);
+        this.currentStmt.bindDouble(2, latitude);
+        this.currentStmt.bindDouble(3, longitude);
+        return this.currentStmt.executeInsert();
+    }
+
     //runs an update on the user's account password
     public int modifyAccountPassword(String account_name, String newPassword){
         ContentValues cv = new ContentValues();
         String where = "account_name=?";
         cv.put("password", newPassword);
         return db.update(ACCOUNT_TABLE, cv, where, new String[]{account_name});
+    }
+
+    public int modifyLocation(String account_name, Double newLatitude, Double newLongitude){
+        ContentValues cv = new ContentValues();
+        String where = "account_name=?";
+        cv.put("latitude", newLatitude);
+        cv.put("longitude", newLongitude);
+        return db.update(LOCATION_TABLE, cv, where, new String[]{account_name});
     }
 
     //runs an update on specific password
@@ -167,6 +187,30 @@ public class DatabaseHelper {
         return list;
     }
 
+    public Map<String, Double> selectLocation(String account_name) {
+        //create a list of geocaches
+        Map<String, Double> list = new HashMap<String, Double>();
+        //build the query
+        String query = "SELECT * FROM " + LOCATION_TABLE;
+        //do not include a search on the cacheNum if it is 0
+        query += " WHERE account_name='" + account_name;
+        query+="' ORDER BY account_name DESC";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                //add a new geocache to the list for each item returned
+                Double latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+                Double longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+                list.put("latitude", latitude);
+                list.put("longitude", longitude);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) {
+            cursor.close();
+        }
+        return list;
+    }
+
 
 
     //Returns all accounts in the database
@@ -203,6 +247,8 @@ public class DatabaseHelper {
             db.execSQL("CREATE TABLE " + ACCOUNT_TABLE + "(account_name TEXT PRIMARY KEY, password TEXT)");
             db.execSQL("CREATE TABLE " + PASSWORD_TABLE + "(account_name TEXT, website TEXT, username TEXT, password TEXT, " +
                     "date TEXT, PRIMARY KEY(account_name, website, username))");
+            db.execSQL("CREATE TABLE " + LOCATION_TABLE + "(account_name TEXT PRIMARY KEY, latitude REAL, longitude REAL)");
+
 
         }
 
@@ -212,6 +258,7 @@ public class DatabaseHelper {
             Log.w("Example", "Upgrading database; this will drop and recreate the tables.");
             db.execSQL("DROP TABLE IF EXISTS " + ACCOUNT_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + PASSWORD_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
             onCreate(db);
         }
     }

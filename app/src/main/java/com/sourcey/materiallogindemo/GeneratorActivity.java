@@ -51,16 +51,16 @@ public class GeneratorActivity extends AppCompatActivity implements View.OnClick
         mTextViews.add((TextView)findViewById(R.id.question1));
         mTextViews.add((TextView)findViewById(R.id.question2));
         mTextViews.add((TextView)findViewById(R.id.question3));
-        mTextViews.add((TextView)findViewById(R.id.question4));
-        mTextViews.add((TextView)findViewById(R.id.question5));
-        mTextViews.add((TextView)findViewById(R.id.question6));
+//        mTextViews.add((TextView)findViewById(R.id.question4));
+//        mTextViews.add((TextView)findViewById(R.id.question5));
+//        mTextViews.add((TextView)findViewById(R.id.question6));
 
         mTextFields.add((EditText)findViewById(R.id.input1));
         mTextFields.add((EditText)findViewById(R.id.input2));
         mTextFields.add((EditText)findViewById(R.id.input3));
-        mTextFields.add((EditText)findViewById(R.id.input4));
-        mTextFields.add((EditText)findViewById(R.id.input5));
-        mTextFields.add((EditText) findViewById(R.id.input6));
+//        mTextFields.add((EditText)findViewById(R.id.input4));
+//        mTextFields.add((EditText)findViewById(R.id.input5));
+//        mTextFields.add((EditText) findViewById(R.id.input6));
 
         //Set generated pass to default
         mGenerateTextView.setText("");

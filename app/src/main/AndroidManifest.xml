@@ -55,6 +55,11 @@
             android:label="Edit Entry"
             android:theme="@style/AppTheme.Dark" >
         </activity>
+        <activity
+            android:name=".BrowserActivity"
+            android:label="Browser"
+            android:theme="@style/AppTheme.Dark" >
+        </activity>
     </application>
 
 </manifest>

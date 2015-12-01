@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -83,7 +84,7 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
 
-                final CharSequence[] options = {"Edit Password", "Check Password", "Delete Entry", "Cancel"};
+                final CharSequence[] options = {"Edit Password", "Check Password", "View in Browser", "Delete Entry", "Cancel"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(PasswordBankActivity.this);
                 builder.setTitle("Password for " + passwordInfoList.get(position).getWebsite());
@@ -108,11 +109,24 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
                             Intent intent = new Intent(reference, CheckerActivity.class);
                             intent.putExtras(b);
                             startActivityForResult(intent, 2);
+                        } else if (options[item].equals("View in Browser")) {
+                            Intent intent = new Intent(reference, BrowserActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("website", passwordInfoList.get(position).getWebsite());
+                            b.putString("password", passwordInfoList.get(position).getPassword());
+                            b.putString("username", passwordInfoList.get(position).getUsername());
+                            intent.putExtras(b);
+                            startActivity(intent);
+//                            LaunchBrowser(passwordInfoList.get(position).getWebsite());
                         } else if (options[item].equals("Delete Entry")) {
                             dbHelp.removePassword(account_name, passwordInfoList.get(position).getWebsite(), passwordInfoList.get(position).getUsername());
                             Toast.makeText(getApplicationContext(), "Password Deleted", Toast.LENGTH_SHORT).show();
                             finish();
-                        } else if (options[item].equals("Cancel"))
+                        } else if (options[item].
+
+                                equals("Cancel")
+
+                                )
 
                         {
                             //if cancel is pressed then close the dialog
@@ -147,5 +161,11 @@ public class PasswordBankActivity extends AppCompatActivity implements View.OnCl
             case R.id.clickArea:
                 break;
         }
+    }
+
+    private void LaunchBrowser(String URL){
+        Uri theUri = Uri.parse(URL);
+        Intent LaunchBrowserIntent = new Intent(Intent.ACTION_VIEW, theUri);
+        startActivity(LaunchBrowserIntent);
     }
 }

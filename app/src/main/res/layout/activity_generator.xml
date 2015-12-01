@@ -6,132 +6,144 @@
     android:orientation="vertical" >
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_columnSpan="1"
-        android:layout_gravity="fill_horizontal|center"
-        android:layout_row="0"
-        android:padding="45dp"
-        android:layout_weight="0.75">
+        android:id="@+id/scrollView" >
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.15">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_gravity="fill_horizontal|center"
+            android:layout_row="0"
+            android:padding="45dp"
+            android:layout_weight="0.75">
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15">
+
+                <TextView
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Question"
+                    android:id="@+id/question1"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/input1"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15">
+
+                <TextView
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Question"
+                    android:id="@+id/question2"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/input2"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15" >
+
+                <TextView
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Question"
+                    android:id="@+id/question3"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/input3"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0.05"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/generate_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Generate" />
+
+                <Button
+                    android:id="@+id/new_question_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_question" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save_password_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check &amp; Save"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.15" />
 
             <TextView
-                android:layout_width="225dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Question"
-                android:id="@+id/question1"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center" />
+                android:padding="30dp"
+                android:text="@string/Generate"
+                android:id="@+id/generate_text"
+                android:layout_weight="0.15"
+                android:textSize="40dp"
+                android:textIsSelectable="false"
+                android:textStyle="bold|italic"
+                android:gravity="center_horizontal" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/input1"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:inputType="text" />
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.15">
-
-            <TextView
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Question"
-                android:id="@+id/question2"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/input2"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:inputType="text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.15" >
-
-            <TextView
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Question"
-                android:id="@+id/question3"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/input3"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:inputType="text" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.05">
-
-        <Button
-            android:id="@+id/generate_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Generate" />
-
-        <Button
-            android:id="@+id/new_question_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_question" />
-
-        <Button
-            android:id="@+id/save_password_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Check &amp; Save" />
-
-
-
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="30dp"
-        android:text="@string/Generate"
-        android:id="@+id/generate_text"
-        android:layout_weight="0.1"
-        android:textSize="40dp"
-        android:textIsSelectable="false"
-        android:textStyle="bold|italic" />
+    </ScrollView>
 
 </LinearLayout>

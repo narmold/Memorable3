@@ -26,22 +26,54 @@
         <item>@string/nav_item_notifications</item>
     </string-array>
 
-    <string name="question1">What is your favorite sports team?</string>
-    <string name="question2">Who was your childhood hero?</string>
-    <string name="question3">Who is your favorite superhero?</string>
-    <string name="question4">What is your mother\'s maiden name?</string>
-    <string name="question5">What country is your dream vacation in?</string>
-    <string name="question6">What city were you born in?</string>
-    <string name="question7">What was your first pet\'s name?</string>
-    <string name="question8">Who was your favorite teacher growing up?</string>
-
+    <string-array name="questions_for_gen">
+        <item>What is your favorite sports team?</item>
+        <item>Who was your childhood hero?</item>
+        <item>Who is your favorite superhero?</item>
+        <item>What is your mother\'s maiden name?</item>
+        <item>What country is your dream vacation in?</item>
+        <item>What city were you born in?</item>
+        <item>What was your first pet\'s name?</item>
+        <item>Who was your favorite teacher growing up?</item>
+        <item>What is your favorite TV show?</item>
+        <item>What is your favorite movie?</item>
+        <item>What is the first name of the person you first kissed?</item>
+        <item>What is the last name of the teacher who gave you your first failing grade?</item>
+        <item>What is the name of the place your wedding reception was held?</item>
+        <item>What was the name of your elementary / primary school?</item>
+        <item>In what city or town does your nearest sibling live?</item>
+        <item>What time of the day were you born? (HHMM)</item>
+        <item>What is your lucky number?</item>
+        <item>In what year was your father born?</item>
+        <item>What was the last name of your third grade teacher?</item>
+        <item>Where were you when you had your first alcoholic drink (or cigarette)?</item>
+        <item>Where were you when you had your first kiss?</item>
+        <item>When you were young, what did you want to be when you grew up?</item>
+        <item>Where were you when you first heard about 9/11?</item>
+        <item>Where were you New Year\'s 2000?</item>
+        <item>What is your oldest cousin\'s first and last name?</item>
+        <item>What is your oldest sibling\'s birthday month and year (e.g., January 1900)?</item>
+        <item>What was your childhood nickname?</item>
+        <item>What is the name of your grandmother\'s dog?</item>
+        <item>What are the last 5 digits of your driver\'s license number?</item>
+        <item>In what city did you meet your spouse/significant other?</item>
+        <item>What is the name of your favorite childhood friend?</item>
+        <item>What street did you live on in third grade?</item>
+        <item>What is the middle name of your oldest child?</item>
+        <item>What is your oldest sibling\'s middle name?</item>
+        <item>What school did you attend for sixth grade?</item>
+        <item>What was your childhood phone number including area code?</item>
+        <item>What was the name of your first stuffed animal?</item>
+        <item>In what city or town was your first job?</item>
+        <item>What is the name of a college you applied to but didn\'t attend?</item>
+        <item>What was your first college major?</item>
+    </string-array>
 
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
-    <string name="new_question">New Question?</string>
+    <string name="new_question">New Questions?</string>
     <string name="Generate">Generate</string>
-    <string name="add_to_bank">Add to Bank</string>
     <string name="title_activity_generator">GeneratorActivity</string>
 
     <string name="hello_world">Hello world!</string>

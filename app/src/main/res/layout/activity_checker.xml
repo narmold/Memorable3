@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:gravity="center"
     android:padding="45dp">
 
@@ -21,13 +21,13 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/passwordInputField"
         android:enabled="true"
         android:hint="Type A New Password..."
         android:gravity="center"
-        android:layout_weight="0.05" />
+        android:layout_weight="0.05"
+        android:inputType="textVisiblePassword" />
 
     <CheckedTextView
         android:layout_width="match_parent"

@@ -348,28 +348,29 @@ public class CheckerActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.savePasswordButton:
 
-                    if(!requirementsMap.get(R.id.lengthRequirementText).apply(passwordView.getText().toString()))
-                    {
-                        passwordView.setError("The password must be between 8 and 64 characters in length.");
-                    }
-                    else if(passwordStrengthView.getProgress() <= CAUTION_PROGRESS)
-                    {
-                        passwordView.setError("You must have more than " + CAUTION_PROGRESS + "% password strength to use a password.");
-                    }
-                    else if(site != null && user != null) {
-                        database.modifySitePassword(account, site, user, passwordView.getText().toString());
-                        Intent i = new Intent();
-                        Bundle b = new Bundle();
-                        b.putString("password", passwordView.getText().toString());
-                        i.putExtras(b);
-                        //finish the activity and return the edit password screen
-                        setResult(RESULT_OK, i);
-                        finish();
-                    } else {
-                        Intent intent = new Intent(this, NewEntry.class);
-                        intent.putExtra("password", passwordView.getText().toString());
-                        startActivity(intent);
-                    }
+                if(!requirementsMap.get(R.id.lengthRequirementText).apply(passwordView.getText().toString()))
+                {
+                    passwordView.setError("The password must be between 8 and 64 characters in length.");
+                }
+                else if(passwordStrengthView.getProgress() <= CAUTION_PROGRESS)
+                {
+                    passwordView.setError("You must have more than " + CAUTION_PROGRESS + "% password strength to use a password.");
+                }
+                else if(site != null && user != null) {
+                    database.modifySitePassword(account, site, user, passwordView.getText().toString());
+                    Intent i = new Intent();
+                    Bundle b = new Bundle();
+                    b.putString("password", passwordView.getText().toString());
+                    i.putExtras(b);
+                    //finish the activity and return the edit password screen
+                    setResult(RESULT_OK, i);
+                    finish();
+                } else {
+                    Intent intent = new Intent(this, NewEntry.class);
+                    intent.putExtra("password", passwordView.getText().toString());
+                    startActivity(intent);
+                    finish();
+                }
                 break;
 
         }

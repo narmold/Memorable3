@@ -1,5 +1,6 @@
 package com.sourcey.materiallogindemo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,10 +16,13 @@ public class GeneratorActivity extends AppCompatActivity {
 
     private Button mGeneratorButton;
     private Button mNewQButton;
+    private Button mAddBankButton;
     private TextView mGenerateTextView;
     private TextView mQuestionTextView;
     private int mCurrentIndex;
     private String generation;
+    private String generation2;
+    private GeneratorActivity reference;
 
 
     private Question[] mQuestionBank = new Question[]
@@ -32,6 +36,8 @@ public class GeneratorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generator);
+
+        reference = this;
 
         //Set generated pass to default
         mGenerateTextView = (TextView) findViewById(R.id.generate_text);
@@ -60,7 +66,8 @@ public class GeneratorActivity extends AppCompatActivity {
         });
 
 
-
+        mAddBankButton = (Button) findViewById(R.id.add_to_bank_button);
+        mAddBankButton.setEnabled(false);
 
 
         //If generate button is clicked generate a strong password
@@ -68,12 +75,30 @@ public class GeneratorActivity extends AppCompatActivity {
         mGeneratorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAddBankButton.setEnabled(true);
+                EditText passField = (EditText) findViewById(R.id.question_field);
+                generation2 = generate(passField);
+                mGenerateTextView.setText(generation2);
 
-                EditText passField = (EditText)findViewById(R.id.question_field);
-                String generation = generate(passField);
-                mGenerateTextView.setText(generation);
             }
         });
+
+
+
+        mAddBankButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putString("password", generation2);
+
+                Intent intent = new Intent(reference, NewEntry.class);
+                intent.putExtras(b);
+                startActivity(intent);
+
+            }
+        });
+
+
 
 
     }

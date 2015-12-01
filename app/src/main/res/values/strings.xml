@@ -41,6 +41,7 @@
     <string name="title_home">Home</string>
     <string name="new_question">New Question?</string>
     <string name="Generate">Generate</string>
+    <string name="add_to_bank">Add to Bank</string>
     <string name="title_activity_generator">GeneratorActivity</string>
 
     <string name="hello_world">Hello world!</string>

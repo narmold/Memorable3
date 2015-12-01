@@ -41,6 +41,8 @@
             android:text="@string/new_question" />
 
 
+
+
     </LinearLayout>
 
     <TextView
@@ -49,5 +51,11 @@
         android:padding="24dp"
         android:text="@string/Generate"
         android:id="@+id/generate_text"/>
+
+    <Button
+        android:id="@+id/add_to_bank_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_bank" />
 
 </LinearLayout>
